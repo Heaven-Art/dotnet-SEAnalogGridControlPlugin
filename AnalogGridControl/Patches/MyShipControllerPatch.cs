@@ -33,11 +33,10 @@ namespace AnanaceDev.AnalogGridControl.Patches
       // Use analog input if present, otherwise use keyboard input
       var newMove = analogInput.MovementVector.LengthSquared() > 0.01f ? analogInput.MovementVector : oldMove;
       
-      var analogRotVector = new VRageMath.Vector2(analogInput.RotationVector.X, analogInput.RotationVector.Y);
-      var newRot = analogRotVector.LengthSquared() > 0.01f ? analogRotVector : oldRot;
+      var newRot = new VRageMath.Vector2(analogInput.RotationVector.X, analogInput.RotationVector.Y);
       
       var newRoll = Math.Abs(analogInput.RotationVector.Z) > 0.01f ? analogInput.RotationVector.Z : oldRoll;
-
+      
       __instance.MoveAndRotate(newMove, newRot, newRoll);
     }
 
