@@ -49,7 +49,7 @@ namespace AnanaceDev.AnalogGridControl
     public Vector3 MovementVector => _MovementVector;
     public Vector3 RotationVector => _RotationVector;
     public Vector2 CameraRotationVector => _CameraRotationVector;
-    public float AccelForce => _BrakeForce;
+    public float AccelForce => _AccelForce; // not sure if typo
     public float BrakeForce => _BrakeForce;
 
     public DirectInput DInput { get; set; }
