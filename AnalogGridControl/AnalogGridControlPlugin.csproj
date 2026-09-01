@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -16,8 +17,7 @@
       <HintPath>$(Pulsar)/Libraries/Legacy/0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="HavokWrapper">
-      <Private>false</Private>
-      <HintPath>$(SpaceEngineersBin64)/HavokWrapper.dll</HintPath>
+      <HintPath>..\..\..\SteamLibrary\steamapps\common\SpaceEngineers\Bin64\HavokWrapper.dll</HintPath>
     </Reference>
     <Reference Include="ProtoBuf.Net">
       <Private>false</Private>
@@ -28,41 +28,43 @@
       <HintPath>$(SpaceEngineersBin64)/ProtoBuf.Net.Core.dll</HintPath>
     </Reference>
     <Reference Include="Sandbox.Common">
-      <Private>false</Private>
-      <HintPath>$(SpaceEngineersBin64)/Sandbox.Common.dll</HintPath>
+      <HintPath>..\..\..\SteamLibrary\steamapps\common\SpaceEngineers\Bin64\Sandbox.Common.dll</HintPath>
     </Reference>
     <Reference Include="Sandbox.Game">
-      <Private>false</Private>
-      <HintPath>$(SpaceEngineersBin64)/Sandbox.Game.dll</HintPath>
+      <HintPath>..\..\..\SteamLibrary\steamapps\common\SpaceEngineers\Bin64\Sandbox.Game.dll</HintPath>
     </Reference>
     <Reference Include="Sandbox.Graphics">
-      <Private>false</Private>
-      <HintPath>$(SpaceEngineersBin64)/Sandbox.Graphics.dll</HintPath>
+      <HintPath>..\..\..\SteamLibrary\steamapps\common\SpaceEngineers\Bin64\Sandbox.Graphics.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX">
-      <Private>false</Private>
-      <HintPath>$(SpaceEngineersBin64)/SharpDX.dll</HintPath>
+      <HintPath>..\..\..\SteamLibrary\steamapps\common\SpaceEngineers\Bin64\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.DirectInput">
-      <Private>false</Private>
-      <HintPath>$(SpaceEngineersBin64)/SharpDX.DirectInput.dll</HintPath>
+      <HintPath>..\..\..\SteamLibrary\steamapps\common\SpaceEngineers\Bin64\SharpDX.DirectInput.dll</HintPath>
     </Reference>
     <Reference Include="VRage">
-      <Private>false</Private>
-      <HintPath>$(SpaceEngineersBin64)/VRage.dll</HintPath>
-    </Reference>
-    <Reference Include="VRage.Library">
-      <Private>false</Private>
-      <HintPath>$(SpaceEngineersBin64)/VRage.Library.dll</HintPath>
+      <HintPath>..\..\..\SteamLibrary\steamapps\common\SpaceEngineers\Bin64\VRage.dll</HintPath>
     </Reference>
     <Reference Include="VRage.Game">
-      <Private>false</Private>
-      <HintPath>$(SpaceEngineersBin64)/VRage.Game.dll</HintPath>
+      <HintPath>..\..\..\SteamLibrary\steamapps\common\SpaceEngineers\Bin64\VRage.Game.dll</HintPath>
+    </Reference>
+    <Reference Include="VRage.Library">
+      <HintPath>..\..\..\SteamLibrary\steamapps\common\SpaceEngineers\Bin64\VRage.Library.dll</HintPath>
+    </Reference>
+    <Reference Include="VRage.Math">
+      <HintPath>..\..\..\SteamLibrary\steamapps\common\SpaceEngineers\Bin64\VRage.Math.dll</HintPath>
     </Reference>
     <Reference Include="VRageMath">
       <Private>false</Private>
       <HintPath>$(SpaceEngineersBin64)/VRage.Math.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.34.1" />
+    <PackageReference Include="Lib.Harmony" Version="2.4.2" />
+    <PackageReference Include="protobuf-net" Version="3.2.56" />
+    <PackageReference Include="protobuf-net.Core" Version="3.2.56" />
   </ItemGroup>
 
 </Project>

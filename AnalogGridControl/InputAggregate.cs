@@ -16,6 +16,9 @@ namespace AnanaceDev.AnalogGridControl
     public event EventHandler<GameAction> ActionTriggered;
     public event EventHandler<GameAction> ActionBegin;
     public event EventHandler<GameAction> ActionEnd;
+    
+    private readonly Dictionary<int, float> _startupValues = new Dictionary<int, float>();
+    private readonly HashSet<int> _initializedBinds = new HashSet<int>();
 
     /// Is the input activated for this tick?
     /// Only true for the first tick the input activates
@@ -49,7 +52,7 @@ namespace AnanaceDev.AnalogGridControl
     public Vector3 MovementVector => _MovementVector;
     public Vector3 RotationVector => _RotationVector;
     public Vector2 CameraRotationVector => _CameraRotationVector;
-    public float AccelForce => _BrakeForce;
+    public float AccelForce => _AccelForce; // not sure if typo
     public float BrakeForce => _BrakeForce;
 
     public DirectInput DInput { get; set; }
@@ -127,6 +130,31 @@ namespace AnanaceDev.AnalogGridControl
         {
           if (mapping.IsAxisMapping)
           {
+            // Create a unique key combining device name and axis index/name
+            int axisHashCode = device.DeviceName.GetHashCode() ^ mapping.MappingAxis.GetHashCode() ^ device.Binds.IndexOf(mapping);
+
+
+            // Record the initial value delivered by the uninitialized device driver
+            if (!_startupValues.ContainsKey(axisHashCode))
+            {
+              _startupValues[axisHashCode] = mapping.Value;
+              continue; // Drop this first frame completely to isolate baseline noise
+            }
+
+            // If it hasn't moved yet, check if the current hardware report breaks out of that baseline
+            if (!_initializedBinds.Contains(axisHashCode))
+            {
+              // Check if the axis delta shifted away from the startup value (0.01f tolerance)
+              if (Math.Abs(mapping.Value - _startupValues[axisHashCode]) > 0.01f)
+              {
+                _initializedBinds.Add(axisHashCode); // The user physically interacted with it!
+              }
+              else
+              {
+                continue; // The stick has not physically moved. Suppress this fake tracking data.
+              }
+            }
+            
             float value = MyMath.Clamp(mapping.Value, -1f, 1f);
             switch (mapping.MappingAxis)
             {

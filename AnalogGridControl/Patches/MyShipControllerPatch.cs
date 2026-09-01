@@ -1,3 +1,4 @@
+using System;
 using AnanaceDev.AnalogGridControl.Util;
 using HarmonyLib;
 using Sandbox.Game.Entities;
@@ -10,8 +11,19 @@ namespace AnanaceDev.AnalogGridControl.Patches
   [HarmonyPatch(typeof(MyShipController), nameof(MyShipController.MoveAndRotate), new System.Type[0])]
   class MyShipControllerPatch
   {
+    private static bool isFirstRun = true; 
+    
     static void Prefix(MyShipController __instance)
     {
+      if (isFirstRun)
+      {
+        var analogInputT = AnalogGridControlSession.Instance;
+        
+        analogInputT.Input.Reset();
+
+        isFirstRun = false;
+      }
+      
       if (!__instance.ShouldAnalogInput())
         return;
 
@@ -28,11 +40,15 @@ namespace AnanaceDev.AnalogGridControl.Patches
       var oldRoll = traverse.Property("RollIndicator").GetValue<float>();
 
       var analogInput = AnalogGridControlSession.Instance;
-      __instance.MoveAndRotate(
-        oldMove + analogInput.MovementVector,
-        oldRot + new VRageMath.Vector2(analogInput.RotationVector.X, analogInput.RotationVector.Y),
-        oldRoll + analogInput.RotationVector.Z
-      );
+  
+      // Use analog input if present, otherwise use keyboard input
+      var newMove = analogInput.MovementVector.LengthSquared() > 0.01f ? analogInput.MovementVector : oldMove;
+      
+      var newRot = new VRageMath.Vector2(analogInput.RotationVector.X, analogInput.RotationVector.Y);
+      
+      var newRoll = Math.Abs(analogInput.RotationVector.Z) > 0.01f ? analogInput.RotationVector.Z : oldRoll;
+      
+      __instance.MoveAndRotate(newMove, newRot, newRoll);
     }
 
     static void Postfix(MyShipController __instance)
