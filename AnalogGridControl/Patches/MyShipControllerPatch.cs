@@ -11,8 +11,19 @@ namespace AnanaceDev.AnalogGridControl.Patches
   [HarmonyPatch(typeof(MyShipController), nameof(MyShipController.MoveAndRotate), new System.Type[0])]
   class MyShipControllerPatch
   {
+    private static bool isFirstRun = true; 
+    
     static void Prefix(MyShipController __instance)
     {
+      if (isFirstRun)
+      {
+        var analogInputT = AnalogGridControlSession.Instance;
+        
+        analogInputT.Input.Reset();
+
+        isFirstRun = false;
+      }
+      
       if (!__instance.ShouldAnalogInput())
         return;
 

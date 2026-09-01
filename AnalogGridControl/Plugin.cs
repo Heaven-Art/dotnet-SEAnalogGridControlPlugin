@@ -3,11 +3,15 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Serialization;
+using AnanaceDev.AnalogGridControl.Patches;
 using AnanaceDev.AnalogGridControl.Util;
 using HarmonyLib;
+using Sandbox.Engine.Utils;
 using SharpDX.DirectInput;
+using VRage;
 using VRage.FileSystem;
 using VRage.Plugins;
+
 
 namespace AnanaceDev.AnalogGridControl
 {
@@ -33,14 +37,16 @@ namespace AnanaceDev.AnalogGridControl
     public void Init(object _gameObject)
     {
       MyPluginLog.Info($"Analog Grid Control {Assembly.GetExecutingAssembly().GetName().Version} Running");
-
+      
+      // MyVRage.Platform.Input2
+      
       AttemptPatches();
 
       LoadMappings();
 
       ReadDevices();
     }
-
+    
     public void Update()
     {
       _CurrentTick++;
@@ -171,7 +177,9 @@ namespace AnanaceDev.AnalogGridControl
 
         Harmony harmony = new Harmony("AnanaceDev.AnalogGridControl");
         harmony.PatchAll(Assembly.GetExecutingAssembly());
-
+        
+        ModernInputNukePatch.ApplyPatch(harmony);
+        
         MyPluginLog.Info("Patches applied.");
 
         ControllerPatched = true;
