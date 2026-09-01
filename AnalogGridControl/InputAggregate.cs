@@ -131,7 +131,6 @@ namespace AnanaceDev.AnalogGridControl
           if (mapping.IsAxisMapping)
           {
             // Create a unique key combining device name and axis index/name
-            // Zero-allocation version: Combines object hash codes instead of building string text
             int axisHashCode = device.DeviceName.GetHashCode() ^ mapping.MappingAxis.GetHashCode() ^ device.Binds.IndexOf(mapping);
 
 
