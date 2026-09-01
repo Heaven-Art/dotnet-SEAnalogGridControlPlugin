@@ -32,9 +32,8 @@ To Do;
   - [X] Handle devices disappearing during gameplay
   - [X] Handle those devices then reappearing during gameplay
   - [X] Handle new devices appearing during gameplay
-- [ ] Handle DInput giving bogus output on device axises until they've been actuated
-- [ ] Ensure multiplayer works
-- [ ] Gamepad interoperability(?)
+- [X] Handle DInput giving bogus output on device axises until they've been actuated
+- [X] Ensure multiplayer works
 - [ ] Support FPS input binds as well(?)
       (Should these be separate binds, or unified? E.g. on foot/jetpack/etc)
 - [X] Configuration UI
